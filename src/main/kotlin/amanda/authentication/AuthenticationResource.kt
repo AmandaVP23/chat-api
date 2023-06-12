@@ -4,6 +4,7 @@ import amanda.utils.ErrorMessage
 import io.quarkus.vertx.web.Body
 import jakarta.annotation.security.RolesAllowed
 import jakarta.inject.Inject
+import jakarta.validation.Valid
 import jakarta.ws.rs.BadRequestException
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.GET
@@ -28,7 +29,7 @@ class AuthenticationResource {
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-    fun login(loginData: LoginDTO): Response {
+    fun login(@Valid loginData: LoginDTO): Response {
         return try {
             val token = authenticationService.login(loginData);
 
@@ -61,13 +62,6 @@ class AuthenticationResource {
     @Path("/reset-password")
     @Consumes(MediaType.APPLICATION_JSON)
     fun resetPassword(@Body resetPasswordData: ResetPasswordRequestDTO): Response {
-//        return try {
-//            authenticationService.resetPassword(resetPasswordData);
-//            Response.ok().build();
-//        } catch (e: Exception) {
-//            Response.status(Response.Status.BAD_REQUEST).entity(ErrorMessage(e.message)).build();
-//        }
-
         authenticationService.resetPassword(resetPasswordData);
         return Response.ok().build();
     }

@@ -1,3 +1,11 @@
 package amanda.authentication
 
-data class ResetPasswordRequestDTO(val token: String, val newPassword: String)
+import jakarta.validation.constraints.NotBlank
+
+class ResetPasswordRequestDTO {
+    @NotBlank
+    lateinit var token: String;
+
+    @NotBlank
+    lateinit var newPassword: String;
+}
